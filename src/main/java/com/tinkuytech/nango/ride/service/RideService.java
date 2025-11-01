@@ -1,7 +1,6 @@
 package com.tinkuytech.nango.ride.service;
 
 import com.tinkuytech.nango.ride.model.Ride;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +8,8 @@ public interface RideService {
     Ride createRide(Ride ride);
     List<Ride> getAllRides();
     Optional<Ride> getRideById(Long id);
-    List<Ride> getRidesByDriverUserId(String driverUserId);
+    List<Ride> getRidesByDriverUserId(Long driverUserId);
     Ride updateRide(Ride ride);
     void deleteRide(Long id);
+    Ride rateRide(Ride ride, double rating, String token);
 }
