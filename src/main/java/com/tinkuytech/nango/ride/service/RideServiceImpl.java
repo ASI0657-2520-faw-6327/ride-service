@@ -53,7 +53,6 @@ public class RideServiceImpl implements RideService {
             ResponseEntity<Boolean> response = restTemplate.exchange(url, HttpMethod.GET, entity, Boolean.class);
 
             Boolean userExists = response.getBody();
-
             if (userExists == null || !userExists) {
                 throw new RuntimeException("❌ El usuario con ID " + ride.getDriverUserId() + " no existe en IAM");
             }
@@ -79,7 +78,7 @@ public class RideServiceImpl implements RideService {
     }
 
     @Override
-    public List<Ride> getRidesByDriverUserId(String driverUserId) {
+    public List<Ride> getRidesByDriverUserId(Long driverUserId) {
         return rideRepository.findByDriverUserId(driverUserId);
     }
 
@@ -97,5 +96,33 @@ public class RideServiceImpl implements RideService {
             throw new RideNotFoundException(id);
         }
         rideRepository.deleteById(id);
+    }
+
+    @Override
+    public Ride rateRide(Ride ride, double rating, String token) {
+        if (rating < 1 || rating > 5) {
+            throw new RuntimeException("La calificación debe estar entre 1 y 5");
+        }
+
+        ride.setRating(rating);
+
+        List<Ride> driverRides = rideRepository.findByDriverUserId(ride.getDriverUserId());
+        double sum = 0;
+        int count = 0;
+
+        for (Ride r : driverRides) {
+            if (r.getRating() != null) {
+                sum += r.getRating();
+                count++;
+            }
+        }
+
+        double average = count > 0 ? sum / count : rating;
+
+        ride.setDriverAverageRating(average);
+
+        Ride updatedRide = rideRepository.save(ride);
+
+        return updatedRide;
     }
 }
