@@ -12,7 +12,10 @@ public class Ride {
     private Long id;
 
     @Column(name = "driver_user_id", nullable = false)
-    private String driverUserId;
+    private Long driverUserId;
+
+    @Column(name = "passenger_user_id")
+    private Long passengerUserId;
 
     @Column(nullable = false)
     private String origin;
@@ -26,6 +29,12 @@ public class Ride {
     @Column(name = "departure_time", nullable = false)
     private LocalDateTime departureTime;
 
+    @Column(name = "rating")
+    private Double rating;
+
+    @Column(name = "driver_average_rating")
+    private Double driverAverageRating;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status = Status.OPEN;
@@ -36,7 +45,8 @@ public class Ride {
 
     public Ride() {}
 
-    public Ride(String driverUserId, String origin, String destination, int availableSeats, LocalDateTime departureTime, Status status) {
+    public Ride(Long driverUserId, String origin, String destination,
+                int availableSeats, LocalDateTime departureTime, Status status) {
         this.driverUserId = driverUserId;
         this.origin = origin;
         this.destination = destination;
@@ -45,24 +55,83 @@ public class Ride {
         this.status = status;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getDriverUserId() { return driverUserId; }
-    public void setDriverUserId(String driverUserId) { this.driverUserId = driverUserId; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getOrigin() { return origin; }
-    public void setOrigin(String origin) { this.origin = origin; }
+    public Long getDriverUserId() {
+        return driverUserId;
+    }
 
-    public String getDestination() { return destination; }
-    public void setDestination(String destination) { this.destination = destination; }
+    public void setDriverUserId(Long driverUserId) {
+        this.driverUserId = driverUserId;
+    }
 
-    public int getAvailableSeats() { return availableSeats; }
-    public void setAvailableSeats(int availableSeats) { this.availableSeats = availableSeats; }
+    public Long getPassengerUserId() {
+        return passengerUserId;
+    }
 
-    public LocalDateTime getDepartureTime() { return departureTime; }
-    public void setDepartureTime(LocalDateTime departureTime) { this.departureTime = departureTime; }
+    public void setPassengerUserId(Long passengerUserId) {
+        this.passengerUserId = passengerUserId;
+    }
 
-    public Status getStatus() { return status; }
-    public void setStatus(Status status) { this.status = status; }
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public int getAvailableSeats() {
+        return availableSeats;
+    }
+
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
+    }
+
+    public LocalDateTime getDepartureTime() {
+        return departureTime;
+    }
+
+    public void setDepartureTime(LocalDateTime departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public Double getDriverAverageRating() {
+        return driverAverageRating;
+    }
+
+    public void setDriverAverageRating(Double driverAverageRating) {
+        this.driverAverageRating = driverAverageRating;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }
